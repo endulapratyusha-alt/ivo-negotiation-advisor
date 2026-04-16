@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contract Negotiation Accelerator</title>
+  <style>
+    body { font-family: Arial; max-width: 800px; margin: 40px auto; }
+    h1 { font-size: 28px; }
+    textarea, select { width: 100%; padding: 10px; margin-top: 10px; }
+    button { padding: 12px; background: black; color: white; border: none; margin-top: 10px; }
+    .output { margin-top: 20px; padding: 15px; background: #f5f5f5; }
+  </style>
+</head>
+
+<body>
+
+<h1>Contract Negotiation Accelerator</h1>
+<p>Concept demo: AI-assisted contract review and negotiation</p>
+
+<select id="type">
+  <option>MSA (Master Service Agreement)</option>
+  <option>NDA</option>
+  <option>Vendor Agreement</option>
+</select>
+
+<textarea id="clause" placeholder="Paste a contract clause here..."></textarea>
+
+<button onclick="generate()">Analyze</button>
+
+<div class="output" id="output"></div>
+
+<script>
+function generate() {
+  let type = document.getElementById("type").value;
+
+  let result = `
+  <b>Risk Identified</b><br>
+  Liability exposure and unclear indemnity terms.<br><br>
+
+  <b>AI Insight</b><br>
+  Clause deviates from standard market benchmarks for ${type}.<br><br>
+
+  <b>Suggested Rewrite</b><br>
+  Limit liability to fees paid in the last 12 months and clarify indemnification scope.<br><br>
+
+  <b>Negotiation Strategy</b><br>
+  Push for balanced liability caps and mutual indemnity.<br><br>
+
+  <b>Why Ivo Wins</b><br>
+  Traditional review is manual. Ivo scales this across thousands of contracts instantly.
+  `;
+
+  document.getElementById("output").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
