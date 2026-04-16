@@ -1,57 +1,416 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Contract Negotiation Accelerator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contract Deal Intelligence Copilot</title>
   <style>
-    body { font-family: Arial; max-width: 800px; margin: 40px auto; }
-    h1 { font-size: 28px; }
-    textarea, select { width: 100%; padding: 10px; margin-top: 10px; }
-    button { padding: 12px; background: black; color: white; border: none; margin-top: 10px; }
-    .output { margin-top: 20px; padding: 15px; background: #f5f5f5; }
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --line: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #111827;
+      --soft: #f9fafb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 20px 40px;
+    }
+
+    .shell {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 38px;
+      line-height: 1.05;
+    }
+
+    .sub {
+      margin: 0 0 24px 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 20px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .panel h2 {
+      margin: 0 0 14px 0;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin: 14px 0 8px;
+    }
+
+    select, textarea, input {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 15px;
+      background: #fff;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .secondary {
+      background: var(--soft);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .helper {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--soft);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .output {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 15px 16px;
+      background: var(--soft);
+    }
+
+    .card h3 {
+      margin: 0 0 8px 0;
+      font-size: 17px;
+    }
+
+    .card p, .card li {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .card ul {
+      margin: 6px 0 0 18px;
+      padding: 0;
+    }
+
+    .footer {
+      margin-top: 16px;
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <div class="shell">
+      <div class="topbar">
+        <div class="brand">Ivo-style PMM concept</div>
+        <div class="badge">Concept demo</div>
+      </div>
 
-<h1>Contract Negotiation Accelerator</h1>
-<p>Concept demo: AI-assisted contract review and negotiation</p>
+      <h1>Contract Deal Intelligence Copilot</h1>
+      <p class="sub">Translate contract friction into a negotiation narrative, sales angle, and competitive wedge.</p>
 
-<select id="type">
-  <option>MSA (Master Service Agreement)</option>
-  <option>NDA</option>
-  <option>Vendor Agreement</option>
-</select>
+      <div class="grid">
+        <div class="panel">
+          <h2>Deal context</h2>
 
-<textarea id="clause" placeholder="Paste a contract clause here..."></textarea>
+          <label for="contractType">Contract type</label>
+          <select id="contractType">
+            <option value="Vendor Agreement">Vendor Agreement</option>
+            <option value="MSA">MSA</option>
+            <option value="NDA">NDA</option>
+            <option value="Procurement Agreement">Procurement Agreement</option>
+            <option value="SaaS Agreement">SaaS Agreement</option>
+          </select>
 
-<button onclick="generate()">Analyze</button>
+          <label for="behavior">Counterparty behavior</label>
+          <select id="behavior">
+            <option value="pushing aggressive terms">Pushing aggressive terms</option>
+            <option value="slow to negotiate">Slow to negotiate</option>
+            <option value="insisting on standard template">Insisting on standard template</option>
+            <option value="risk-averse legal team">Risk-averse legal team</option>
+          </select>
 
-<div class="output" id="output"></div>
+          <label for="concern">Buyer concern</label>
+          <textarea id="concern" placeholder="e.g. They won’t move on liability caps and the deal is stalling."></textarea>
 
-<script>
-function generate() {
-  let type = document.getElementById("type").value;
+          <div class="btn-row">
+            <button class="primary" onclick="generateOutput()">Generate intelligence</button>
+            <button class="secondary" onclick="loadExample()">Try example</button>
+          </div>
 
-  let result = `
-  <b>Risk Identified</b><br>
-  Liability exposure and unclear indemnity terms.<br><br>
+          <div id="loading" class="loading">Analyzing negotiation friction...</div>
 
-  <b>AI Insight</b><br>
-  Clause deviates from standard market benchmarks for ${type}.<br><br>
+          <div class="helper">
+            Built to simulate how product marketing can turn contract review pain into a live deal narrative and competitive sales angle.
+          </div>
+        </div>
 
-  <b>Suggested Rewrite</b><br>
-  Limit liability to fees paid in the last 12 months and clarify indemnification scope.<br><br>
+        <div class="panel">
+          <div id="emptyState" class="empty">
+            Generate a scenario to see how the deal can be reframed into negotiation strategy, sales talk track, and an Ivo-style competitive wedge.
+          </div>
 
-  <b>Negotiation Strategy</b><br>
-  Push for balanced liability caps and mutual indemnity.<br><br>
+          <div id="output" class="output">
+            <div class="card">
+              <h3>What’s actually happening</h3>
+              <p id="happening"></p>
+            </div>
 
-  <b>Why Ivo Wins</b><br>
-  Traditional review is manual. Ivo scales this across thousands of contracts instantly.
-  `;
+            <div class="card">
+              <h3>What’s at risk</h3>
+              <p id="risk"></p>
+            </div>
 
-  document.getElementById("output").innerHTML = result;
-}
-</script>
+            <div class="card">
+              <h3>Recommended position</h3>
+              <p id="position"></p>
+            </div>
 
+            <div class="card">
+              <h3>Negotiation strategy</h3>
+              <p id="strategy"></p>
+            </div>
+
+            <div class="card">
+              <h3>What a rep should say</h3>
+              <p id="talktrack"></p>
+            </div>
+
+            <div class="card">
+              <h3>Trap question</h3>
+              <p id="question"></p>
+            </div>
+
+            <div class="card">
+              <h3>Why Ivo wins here</h3>
+              <div id="wins"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">Built independently by Pratyusha Endula as a PMM concept prototype.</div>
+    </div>
+  </div>
+
+  <script>
+    function getScenario(contractType, behavior, concern) {
+      const problem = (concern || "").trim();
+
+      const map = {
+        "pushing aggressive terms": {
+          happening: `The counterparty is using ${contractType} language to shift risk and anchor the negotiation in their favor.${problem ? " Primary friction: " + problem : ""}`,
+          risk: "If accepted as-is, the team takes on disproportionate legal and financial exposure relative to the deal value.",
+          position: "Reframe the conversation around balanced market terms and faster cycle time, not just legal pushback.",
+          strategy: "Standardize fallback language, benchmark the clause against accepted norms, and move the conversation from opinion to structured negotiation.",
+          talktrack: "Most teams lose time not because they lack legal judgment, but because every risky clause turns into a manual negotiation loop. The faster move is structured, benchmark-backed review.",
+          question: "How do you currently know whether a pushed term is truly market standard or just aggressively drafted?",
+          wins: [
+            "Manual review is slow and inconsistent",
+            "Static playbooks break when deal pressure rises",
+            "Ivo helps teams review, benchmark, and negotiate contract terms faster at scale"
+          ]
+        },
+        "slow to negotiate": {
+          happening: `Negotiation is stalling because each revision cycle depends on manual review and back-and-forth alignment across stakeholders.${problem ? " Primary friction: " + problem : ""}`,
+          risk: "Long review cycles slow revenue, frustrate counterparties, and increase legal workload on repetitive issues.",
+          position: "Reframe speed as a legal productivity issue, not just a sales urgency issue.",
+          strategy: "Use AI-assisted review to surface common redlines faster, reduce repetitive analysis, and keep deals moving without compromising legal judgment.",
+          talktrack: "The biggest drag in negotiation is not complexity alone, it’s repetitive review. Teams need a way to move standard issues faster without recreating analysis every time.",
+          question: "What part of your current review cycle is genuinely strategic, and what part is just repeated legal effort?",
+          wins: [
+            "Manual review creates bottlenecks",
+            "Legal teams stay buried in repetitive work",
+            "Ivo improves review throughput without lowering standards"
+          ]
+        },
+        "insisting on standard template": {
+          happening: `The counterparty is using their standard ${contractType} template as leverage, forcing your team to negotiate from a less favorable starting point.${problem ? " Primary friction: " + problem : ""}`,
+          risk: "The team may concede non-standard obligations simply to keep the deal moving.",
+          position: "Shift the conversation from document ownership to risk clarity and negotiation consistency.",
+          strategy: "Identify the high-risk clauses fast, apply known fallback positions, and focus negotiations on what materially impacts risk and business value.",
+          talktrack: "Standard templates are only standard for the party that wrote them. The real question is which clauses create outsized risk and how quickly your team can respond to them.",
+          question: "When a counterparty insists their paper is standard, how do you quickly separate normal terms from hidden risk?",
+          wins: [
+            "Templates create false comfort",
+            "Manual spotting of risk is slow",
+            "Ivo helps teams identify, prioritize, and negotiate risky terms faster"
+          ]
+        },
+        "risk-averse legal team": {
+          happening: `The deal is slowing because internal legal is absorbing too much review effort manually and defaulting to caution under uncertainty.${problem ? " Primary friction: " + problem : ""}`,
+          risk: "Overly manual review slows deal cycles and makes legal the bottleneck, even when the issues are common and repeatable.",
+          position: "Reframe Ivo as leverage for legal judgment, not a replacement for it.",
+          strategy: "Use AI to handle first-pass review, surface deviations, and give legal a faster way to focus on the clauses that truly require judgment.",
+          talktrack: "This is not about replacing legal judgment. It’s about giving legal a faster way to spend judgment where it actually matters.",
+          question: "How much of your current review process truly needs senior legal judgment, and how much is repeatable pattern recognition?",
+          wins: [
+            "Risk aversion grows when review is fully manual",
+            "Legal teams need leverage, not more volume",
+            "Ivo scales review consistency while keeping legal in control"
+          ]
+        }
+      };
+
+      return map[behavior];
+    }
+
+    function renderOutput(data) {
+      document.getElementById("happening").textContent = data.happening;
+      document.getElementById("risk").textContent = data.risk;
+      document.getElementById("position").textContent = data.position;
+      document.getElementById("strategy").textContent = data.strategy;
+      document.getElementById("talktrack").textContent = data.talktrack;
+      document.getElementById("question").textContent = data.question;
+      document.getElementById("wins").innerHTML = "<ul>" + data.wins.map(item => `<li>${item}</li>`).join("") + "</ul>";
+
+      document.getElementById("emptyState").style.display = "none";
+      document.getElementById("output").style.display = "flex";
+    }
+
+    function generateOutput() {
+      const contractType = document.getElementById("contractType").value;
+      const behavior = document.getElementById("behavior").value;
+      const concern = document.getElementById("concern").value;
+      const loading = document.getElementById("loading");
+
+      loading.style.display = "block";
+      document.getElementById("output").style.display = "none";
+
+      setTimeout(() => {
+        const data = getScenario(contractType, behavior, concern);
+        renderOutput(data);
+        loading.style.display = "none";
+      }, 500);
+    }
+
+    function loadExample() {
+      document.getElementById("contractType").value = "Vendor Agreement";
+      document.getElementById("behavior").value = "pushing aggressive terms";
+      document.getElementById("concern").value = "They won’t move on liability caps and the deal is stalling.";
+      generateOutput();
+    }
+  </script>
 </body>
 </html>
