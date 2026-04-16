@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contract Deal Intelligence Copilot</title>
+  <title>Competitive Intelligence Copilot</title>
   <style>
     :root {
       --bg: #f6f7fb;
@@ -15,9 +15,7 @@
       --soft: #f9fafb;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -78,7 +76,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: 1fr 1.05fr;
+      grid-template-columns: 1fr 1.08fr;
       gap: 20px;
     }
 
@@ -101,7 +99,7 @@
       margin: 14px 0 8px;
     }
 
-    select, textarea, input {
+    select, textarea {
       width: 100%;
       border: 1px solid #d1d5db;
       border-radius: 10px;
@@ -112,7 +110,7 @@
     }
 
     textarea {
-      min-height: 110px;
+      min-height: 100px;
       resize: vertical;
     }
 
@@ -227,69 +225,68 @@
         <div class="badge">Concept demo</div>
       </div>
 
-      <h1>Contract Deal Intelligence Copilot</h1>
-      <p class="sub">Translate contract friction into a negotiation narrative, sales angle, and competitive wedge.</p>
+      <h1>Competitive Intelligence Copilot</h1>
+      <p class="sub">Turn competitor context into sales-ready positioning, objection handling, and a sharper Ivo wedge.</p>
 
       <div class="grid">
         <div class="panel">
           <h2>Deal context</h2>
 
-          <label for="contractType">Contract type</label>
-          <select id="contractType">
-            <option value="Vendor Agreement">Vendor Agreement</option>
-            <option value="MSA">MSA</option>
-            <option value="NDA">NDA</option>
-            <option value="Procurement Agreement">Procurement Agreement</option>
-            <option value="SaaS Agreement">SaaS Agreement</option>
+          <label for="competitor">Competitor</label>
+          <select id="competitor">
+            <option value="ironclad">Ironclad</option>
+            <option value="linksquares">LinkSquares</option>
+            <option value="contractpodai">ContractPodAi</option>
+            <option value="clm">Legacy CLM / generic workflow tool</option>
+            <option value="manual">Manual legal review</option>
           </select>
 
-          <label for="behavior">Counterparty behavior</label>
-          <select id="behavior">
-            <option value="pushing aggressive terms">Pushing aggressive terms</option>
-            <option value="slow to negotiate">Slow to negotiate</option>
-            <option value="insisting on standard template">Insisting on standard template</option>
-            <option value="risk-averse legal team">Risk-averse legal team</option>
+          <label for="stage">Deal stage</label>
+          <select id="stage">
+            <option value="early">Early evaluation</option>
+            <option value="mid">Mid funnel</option>
+            <option value="late">Late stage / competitive bakeoff</option>
           </select>
 
-          <label for="concern">Buyer concern</label>
-          <textarea id="concern" placeholder="e.g. They won’t move on liability caps and the deal is stalling."></textarea>
+          <label for="objection">Buyer objection</label>
+          <textarea id="objection" placeholder="e.g. Why not just use our existing CLM?"></textarea>
 
           <div class="btn-row">
-            <button class="primary" onclick="generateOutput()">Generate intelligence</button>
+            <button class="primary" onclick="generateOutput()">Generate battle response</button>
             <button class="secondary" onclick="loadExample()">Try example</button>
           </div>
 
-          <div id="loading" class="loading">Analyzing negotiation friction...</div>
+          <div id="loading" class="loading">Analyzing competitor posture...</div>
 
           <div class="helper">
-            Built to simulate how product marketing can turn contract review pain into a live deal narrative and competitive sales angle.
+            Built to simulate how product marketing can operationalize competitor landscape insights into live deal support.
           </div>
         </div>
 
         <div class="panel">
           <div id="emptyState" class="empty">
-            Generate a scenario to see how the deal can be reframed into negotiation strategy, sales talk track, and an Ivo-style competitive wedge.
+            Generate a scenario to see how a competitive objection can be reframed into positioning, talk track, and a sharper Ivo wedge.
           </div>
 
           <div id="output" class="output">
             <div class="card">
-              <h3>What’s actually happening</h3>
-              <p id="happening"></p>
+              <h3>What the competitor is saying</h3>
+              <p id="saying"></p>
             </div>
 
             <div class="card">
-              <h3>What’s at risk</h3>
-              <p id="risk"></p>
+              <h3>Where they win</h3>
+              <p id="win"></p>
             </div>
 
             <div class="card">
-              <h3>Recommended position</h3>
-              <p id="position"></p>
+              <h3>Where they break</h3>
+              <p id="break"></p>
             </div>
 
             <div class="card">
-              <h3>Negotiation strategy</h3>
-              <p id="strategy"></p>
+              <h3>How Ivo reframes the deal</h3>
+              <p id="reframe"></p>
             </div>
 
             <div class="card">
@@ -315,72 +312,90 @@
   </div>
 
   <script>
-    function getScenario(contractType, behavior, concern) {
-      const problem = (concern || "").trim();
+    function getScenario(competitor, stage, objection) {
+      const obj = (objection || "").trim();
+      const stageLine = stage === "late"
+        ? "The deal is already in a head-to-head comparison, so clarity and differentiation matter more than feature volume."
+        : stage === "mid"
+        ? "The buyer is comparing options and trying to understand where workflow value ends and review intelligence begins."
+        : "The buyer is still framing the category and likely defaults to whatever sounds familiar.";
 
       const map = {
-        "pushing aggressive terms": {
-          happening: `The counterparty is using ${contractType} language to shift risk and anchor the negotiation in their favor.${problem ? " Primary friction: " + problem : ""}`,
-          risk: "If accepted as-is, the team takes on disproportionate legal and financial exposure relative to the deal value.",
-          position: "Reframe the conversation around balanced market terms and faster cycle time, not just legal pushback.",
-          strategy: "Standardize fallback language, benchmark the clause against accepted norms, and move the conversation from opinion to structured negotiation.",
-          talktrack: "Most teams lose time not because they lack legal judgment, but because every risky clause turns into a manual negotiation loop. The faster move is structured, benchmark-backed review.",
-          question: "How do you currently know whether a pushed term is truly market standard or just aggressively drafted?",
+        ironclad: {
+          saying: `Ironclad is likely positioning itself as the broader contract workflow and CLM platform.${obj ? " Buyer objection: " + obj : ""}`,
+          win: "Strong brand recognition and broader workflow management story across the contract lifecycle.",
+          break: "The story can drift toward managing process rather than improving the speed and quality of contract review and negotiation. " + stageLine,
+          reframe: "Don’t fight on workflow breadth. Reframe around contract negotiation velocity and the practical value of AI inside legal review.",
+          talktrack: "Most CLM platforms help teams manage contracts. Ivo helps legal and procurement teams review and negotiate them faster where the real bottleneck usually lives.",
+          question: "When your team is under pressure to move a contract faster, do they need another workflow layer or better negotiation leverage inside the review itself?",
           wins: [
-            "Manual review is slow and inconsistent",
-            "Static playbooks break when deal pressure rises",
-            "Ivo helps teams review, benchmark, and negotiate contract terms faster at scale"
+            "Ironclad is strong as a system of workflow",
+            "Ivo is sharper as a system of review and negotiation leverage",
+            "Ivo wins when the buyer cares about legal productivity, not just lifecycle administration"
           ]
         },
-        "slow to negotiate": {
-          happening: `Negotiation is stalling because each revision cycle depends on manual review and back-and-forth alignment across stakeholders.${problem ? " Primary friction: " + problem : ""}`,
-          risk: "Long review cycles slow revenue, frustrate counterparties, and increase legal workload on repetitive issues.",
-          position: "Reframe speed as a legal productivity issue, not just a sales urgency issue.",
-          strategy: "Use AI-assisted review to surface common redlines faster, reduce repetitive analysis, and keep deals moving without compromising legal judgment.",
-          talktrack: "The biggest drag in negotiation is not complexity alone, it’s repetitive review. Teams need a way to move standard issues faster without recreating analysis every time.",
-          question: "What part of your current review cycle is genuinely strategic, and what part is just repeated legal effort?",
+        linksquares: {
+          saying: `LinkSquares is likely emphasizing visibility, repository value, and contract analytics.${obj ? " Buyer objection: " + obj : ""}`,
+          win: "Good story around contract visibility, search, and post-signature value.",
+          break: "Visibility alone does not solve the day-to-day friction of reviewing and negotiating live contracts. " + stageLine,
+          reframe: "Shift the conversation from knowing what contracts exist to improving how contracts actually get negotiated and approved.",
+          talktrack: "Visibility matters, but most teams don’t lose time after signature. They lose time inside review and negotiation. That’s where Ivo is strongest.",
+          question: "Where is your bigger pain today contract visibility after signature, or getting risky paper reviewed and negotiated before the deal slows down?",
           wins: [
-            "Manual review creates bottlenecks",
-            "Legal teams stay buried in repetitive work",
-            "Ivo improves review throughput without lowering standards"
+            "LinkSquares is strong on visibility and repository value",
+            "Ivo is stronger where legal work is most painful: active review and negotiation",
+            "Ivo wins when pre-signature velocity matters"
           ]
         },
-        "insisting on standard template": {
-          happening: `The counterparty is using their standard ${contractType} template as leverage, forcing your team to negotiate from a less favorable starting point.${problem ? " Primary friction: " + problem : ""}`,
-          risk: "The team may concede non-standard obligations simply to keep the deal moving.",
-          position: "Shift the conversation from document ownership to risk clarity and negotiation consistency.",
-          strategy: "Identify the high-risk clauses fast, apply known fallback positions, and focus negotiations on what materially impacts risk and business value.",
-          talktrack: "Standard templates are only standard for the party that wrote them. The real question is which clauses create outsized risk and how quickly your team can respond to them.",
-          question: "When a counterparty insists their paper is standard, how do you quickly separate normal terms from hidden risk?",
+        contractpodai: {
+          saying: `ContractPodAi is likely positioning a broad legal platform story with automation across legal workflows.${obj ? " Buyer objection: " + obj : ""}`,
+          win: "Broader legal operations platform narrative and enterprise-scale ambition.",
+          break: "Broader platform stories can feel heavier, slower to operationalize, and less focused on solving the immediate contract negotiation bottleneck. " + stageLine,
+          reframe: "Position Ivo as the practical, focused answer for teams that need immediate review and negotiation leverage, not platform sprawl.",
+          talktrack: "A broad platform can sound impressive, but most teams want faster contract review and negotiation now. Ivo is built for that operational reality.",
+          question: "Are you trying to buy a broad legal platform, or solve the contract review and negotiation bottleneck that is slowing deals today?",
           wins: [
-            "Templates create false comfort",
-            "Manual spotting of risk is slow",
-            "Ivo helps teams identify, prioritize, and negotiate risky terms faster"
+            "Broader suites can create evaluation drag",
+            "Ivo is easier to understand around a single painful workflow",
+            "Ivo wins when speed to value matters"
           ]
         },
-        "risk-averse legal team": {
-          happening: `The deal is slowing because internal legal is absorbing too much review effort manually and defaulting to caution under uncertainty.${problem ? " Primary friction: " + problem : ""}`,
-          risk: "Overly manual review slows deal cycles and makes legal the bottleneck, even when the issues are common and repeatable.",
-          position: "Reframe Ivo as leverage for legal judgment, not a replacement for it.",
-          strategy: "Use AI to handle first-pass review, surface deviations, and give legal a faster way to focus on the clauses that truly require judgment.",
-          talktrack: "This is not about replacing legal judgment. It’s about giving legal a faster way to spend judgment where it actually matters.",
-          question: "How much of your current review process truly needs senior legal judgment, and how much is repeatable pattern recognition?",
+        clm: {
+          saying: `The buyer is likely grouping Ivo with generic CLM or workflow tools.${obj ? " Buyer objection: " + obj : ""}`,
+          win: "Familiar category, established process management, lower perceived learning curve.",
+          break: "Generic CLM tools are often strong at storage, routing, and administration but weak at accelerating live negotiation and contract review. " + stageLine,
+          reframe: "Separate lifecycle administration from negotiation intelligence. Make the buyer see that these are different jobs.",
+          talktrack: "A CLM can manage where a contract goes. Ivo helps your team decide how it should move and how to negotiate it faster.",
+          question: "Does your current CLM actually help legal teams review and negotiate better, or does it mostly manage process around the document?",
           wins: [
-            "Risk aversion grows when review is fully manual",
-            "Legal teams need leverage, not more volume",
-            "Ivo scales review consistency while keeping legal in control"
+            "CLMs are systems of record and routing",
+            "Ivo is a system of review and negotiation support",
+            "Ivo wins when the pain is inside the contract, not around it"
+          ]
+        },
+        manual: {
+          saying: `The status quo is manual legal review, often defended as safer, more nuanced, or more trustworthy.${obj ? " Buyer objection: " + obj : ""}`,
+          win: "Human judgment and familiarity with existing legal process.",
+          break: "Manual review does not scale well, creates repetitive work, and slows contract velocity even when the issues are common and repeatable. " + stageLine,
+          reframe: "Position Ivo as leverage for legal judgment, not replacement of it.",
+          talktrack: "This isn’t about replacing legal judgment. It’s about helping legal spend that judgment where it matters instead of repeating the same review work across every contract.",
+          question: "How much of your current contract review process truly requires senior legal judgment, and how much is repeatable pattern recognition?",
+          wins: [
+            "Manual review is trusted but slow",
+            "Ivo preserves legal oversight while increasing throughput",
+            "Ivo wins when the buyer wants scale without sacrificing quality"
           ]
         }
       };
 
-      return map[behavior];
+      return map[competitor];
     }
 
     function renderOutput(data) {
-      document.getElementById("happening").textContent = data.happening;
-      document.getElementById("risk").textContent = data.risk;
-      document.getElementById("position").textContent = data.position;
-      document.getElementById("strategy").textContent = data.strategy;
+      document.getElementById("saying").textContent = data.saying;
+      document.getElementById("win").textContent = data.win;
+      document.getElementById("break").textContent = data.break;
+      document.getElementById("reframe").textContent = data.reframe;
       document.getElementById("talktrack").textContent = data.talktrack;
       document.getElementById("question").textContent = data.question;
       document.getElementById("wins").innerHTML = "<ul>" + data.wins.map(item => `<li>${item}</li>`).join("") + "</ul>";
@@ -390,25 +405,25 @@
     }
 
     function generateOutput() {
-      const contractType = document.getElementById("contractType").value;
-      const behavior = document.getElementById("behavior").value;
-      const concern = document.getElementById("concern").value;
+      const competitor = document.getElementById("competitor").value;
+      const stage = document.getElementById("stage").value;
+      const objection = document.getElementById("objection").value;
       const loading = document.getElementById("loading");
 
       loading.style.display = "block";
       document.getElementById("output").style.display = "none";
 
       setTimeout(() => {
-        const data = getScenario(contractType, behavior, concern);
+        const data = getScenario(competitor, stage, objection);
         renderOutput(data);
         loading.style.display = "none";
       }, 500);
     }
 
     function loadExample() {
-      document.getElementById("contractType").value = "Vendor Agreement";
-      document.getElementById("behavior").value = "pushing aggressive terms";
-      document.getElementById("concern").value = "They won’t move on liability caps and the deal is stalling.";
+      document.getElementById("competitor").value = "clm";
+      document.getElementById("stage").value = "mid";
+      document.getElementById("objection").value = "Why not just use our existing CLM?";
       generateOutput();
     }
   </script>
